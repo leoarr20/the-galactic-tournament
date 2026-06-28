@@ -1,0 +1,63 @@
+<!--
+  Root application layout.
+  Contains the global header, navigation links, language switcher and router outlet.
+-->
+<div class="app-container">
+  <header class="galactic-header">
+    <div class="header-container">
+
+      <div class="brand">
+        <h1>{{ 'APP.TITLE' | translate }}</h1>
+        <span class="subtitle">{{ 'APP.SUBTITLE' | translate }}</span>
+      </div>
+
+      <nav class="main-nav" [attr.aria-label]="'APP.MAIN_NAVIGATION' | translate">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+          {{ 'APP.HOME' | translate }}
+        </a>
+
+        <a
+          routerLink="/species"
+          routerLinkActive="active">
+          {{ 'APP.SPECIES' | translate }}
+        </a>
+
+        <a
+          routerLink="/battles"
+          routerLinkActive="active">
+          {{ 'APP.BATTLES' | translate }}
+        </a>
+
+        <a
+          routerLink="/ranking"
+          routerLinkActive="active">
+          {{ 'APP.RANKING' | translate }}
+        </a>
+      </nav>
+
+      <div class="language-switcher">
+        <button
+          type="button"
+          [class.active]="currentLanguage === 'en'"
+          (click)="changeLanguage('en')">
+          EN
+        </button>
+
+        <button
+          type="button"
+          [class.active]="currentLanguage === 'es'"
+          (click)="changeLanguage('es')">
+          ES
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,203 @@
+/*
+  Battle component styles.
+  Defines the battle form, action buttons, winner card, history table and responsive layout.
+*/
+.battle-card,
+.history-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  color: #261447;
+}
+
+.description,
+.section-header p {
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.section-header p {
+  margin-bottom: 0;
+}
+
+.battle-form {
+  display: grid;
+  grid-template-columns: 1fr 70px 1fr;
+  gap: 18px;
+  align-items: end;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #261447;
+  margin-bottom: 6px;
+}
+
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.versus {
+  background: linear-gradient(135deg, #5e239d, #9c27b0);
+  color: white;
+  font-weight: 800;
+  text-align: center;
+  padding: 13px 0;
+  border-radius: 999px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: linear-gradient(135deg, #5e239d, #9c27b0);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button.secondary,
+button.small-button {
+  background: #261447;
+}
+
+button.small-button {
+  padding: 10px 16px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.helper-text {
+  margin-top: 14px;
+  color: #666;
+  font-size: 14px;
+}
+
+.winner-card {
+  margin-top: 24px;
+  background: #f3effa;
+  border-radius: 14px;
+  padding: 22px;
+  border-left: 5px solid #9c27b0;
+}
+
+.winner-card span {
+  color: #5e239d;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.winner-card h3 {
+  margin: 8px 0;
+  font-size: 28px;
+  color: #261447;
+}
+
+.winner-card p {
+  color: #444;
+  margin: 6px 0 0;
+}
+
+.winner-card .reason {
+  font-weight: 600;
+  color: #5e239d;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  color: #261447;
+  background: #f3effa;
+  padding: 12px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+  vertical-align: top;
+}
+
+.winner-badge {
+  display: inline-block;
+  background: rgba(156, 39, 176, 0.12);
+  color: #5e239d;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.message {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.error {
+  background: #ffe8e8;
+  color: #a40000;
+}
+
+.empty-state {
+  color: #666;
+  padding: 18px 0;
+}
+
+@media (max-width: 800px) {
+  .battle-form {
+    grid-template-columns: 1fr;
+  }
+
+  .versus {
+    width: 70px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

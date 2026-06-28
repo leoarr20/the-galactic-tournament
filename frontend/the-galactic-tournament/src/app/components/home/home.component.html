@@ -1,0 +1,87 @@
+<!--
+  Home page template.
+  Presents the tournament introduction, rules and participation flow using i18n keys.
+-->
+<main class="dashboard-container">
+  <section class="home-hero">
+    <div class="hero-bg-glow"></div>
+
+    <div class="hero-content">
+      <span class="eyebrow">{{ 'HOME.EYEBROW' | translate }}</span>
+
+      <h2>{{ 'HOME.TITLE' | translate }}</h2>
+
+      <p>
+        {{ 'HOME.DESCRIPTION' | translate }}
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/species" class="primary-button">
+          {{ 'HOME.REGISTER_SPECIES' | translate }}
+        </a>
+
+        <a routerLink="/battles" class="secondary-button">
+          {{ 'HOME.START_BATTLE' | translate }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rules-grid">
+    <article class="rule-card">
+      <div class="rule-number">01</div>
+      <h3>{{ 'HOME.RULE_REGISTER' | translate }}</h3>
+      <p>{{ 'HOME.RULE_REGISTER_DESC' | translate }}</p>
+    </article>
+
+    <article class="rule-card">
+      <div class="rule-number">02</div>
+      <h3>{{ 'HOME.RULE_BATTLE' | translate }}</h3>
+      <p>{{ 'HOME.RULE_BATTLE_DESC' | translate }}</p>
+    </article>
+
+    <article class="rule-card">
+      <div class="rule-number">03</div>
+      <h3>{{ 'HOME.RULE_VICTORY' | translate }}</h3>
+      <p>{{ 'HOME.RULE_VICTORY_DESC' | translate }}</p>
+    </article>
+
+    <article class="rule-card">
+      <div class="rule-number">04</div>
+      <h3>{{ 'HOME.RULE_RANKING' | translate }}</h3>
+      <p>{{ 'HOME.RULE_RANKING_DESC' | translate }}</p>
+    </article>
+  </section>
+
+  <section class="flow-section">
+    <h3>{{ 'HOME.HOW_TO_PARTICIPATE' | translate }}</h3>
+
+    <div class="flow">
+      <div class="flow-step">
+        <span>1</span>
+        <p>{{ 'HOME.CREATE_SPECIES' | translate }}</p>
+      </div>
+
+      <div class="flow-line"></div>
+
+      <div class="flow-step">
+        <span>2</span>
+        <p>{{ 'HOME.CHOOSE_OPPONENT' | translate }}</p>
+      </div>
+
+      <div class="flow-line"></div>
+
+      <div class="flow-step">
+        <span>3</span>
+        <p>{{ 'HOME.FIGHT' | translate }}</p>
+      </div>
+
+      <div class="flow-line"></div>
+
+      <div class="flow-step">
+        <span>4</span>
+        <p>{{ 'HOME.CLIMB' | translate }}</p>
+      </div>
+    </div>
+  </section>
+</main>

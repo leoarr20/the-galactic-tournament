@@ -1,0 +1,112 @@
+<!--
+  Battle page template.
+  Allows manual/random battles and displays the battle history.
+-->
+<section class="battle-card">
+  <h2>{{ 'BATTLE.TITLE' | translate }}</h2>
+  <p class="description">
+    {{ 'BATTLE.DESCRIPTION' | translate }}
+  </p>
+
+  <div class="battle-form">
+    <div class="form-group">
+      <label for="speciesAId">{{ 'BATTLE.SPECIES_A' | translate }}</label>
+      <select id="speciesAId" [(ngModel)]="speciesAId" name="speciesAId">
+        <option [value]="0">{{ 'BATTLE.SELECT_SPECIES' | translate }}</option>
+        <option *ngFor="let item of speciesList" [value]="item.id">
+          {{ item.name }} - {{ 'COMMON.POWER' | translate }} {{ item.powerLevel }}
+        </option>
+      </select>
+    </div>
+
+    <div class="versus">VS</div>
+
+    <div class="form-group">
+      <label for="speciesBId">{{ 'BATTLE.SPECIES_B' | translate }}</label>
+      <select id="speciesBId" [(ngModel)]="speciesBId" name="speciesBId">
+        <option [value]="0">{{ 'BATTLE.SELECT_SPECIES' | translate }}</option>
+        <option *ngFor="let item of speciesList" [value]="item.id">
+          {{ item.name }} - {{ 'COMMON.POWER' | translate }} {{ item.powerLevel }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="message error" *ngIf="errorMessage">
+    {{ errorMessage | translate }}
+  </div>
+
+  <div class="actions">
+    <button type="button" (click)="startBattle()" [disabled]="loading || speciesList.length < 2">
+      <span *ngIf="loading">{{ 'BATTLE.FIGHTING' | translate }}</span>
+      <span *ngIf="!loading">{{ 'BATTLE.START' | translate }}</span>
+    </button>
+
+    <button type="button" class="secondary" (click)="startRandomBattle()" [disabled]="loading || speciesList.length < 2">
+      {{ 'BATTLE.RANDOM' | translate }}
+    </button>
+  </div>
+
+  <div class="helper-text" *ngIf="speciesList.length < 2">
+    {{ 'BATTLE.HELPER_MIN_SPECIES' | translate }}
+  </div>
+
+  <div class="winner-card" *ngIf="lastBattle">
+    <span>{{ 'BATTLE.WINNER' | translate }}</span>
+    <h3>{{ lastBattle.winnerName }}</h3>
+    <p>
+      {{ 'BATTLE.WINNER_SUMMARY' | translate:{
+        aName: lastBattle.speciesAName,
+        aPower: lastBattle.speciesAPowerLevel,
+        bName: lastBattle.speciesBName,
+        bPower: lastBattle.speciesBPowerLevel
+      } }}
+    </p>
+    <p class="reason">{{ translateBattleReason(lastBattle.resultReason) }}</p>
+  </div>
+</section>
+
+<section class="history-card">
+  <div class="section-header">
+    <div>
+      <h2>{{ 'BATTLE.HISTORY_TITLE' | translate }}</h2>
+      <p>{{ 'BATTLE.HISTORY_DESCRIPTION' | translate }}</p>
+    </div>
+
+    <button type="button" class="small-button" (click)="loadBattles()">
+      {{ 'COMMON.REFRESH' | translate }}
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="battles.length === 0">
+    {{ 'BATTLE.EMPTY_HISTORY' | translate }}
+  </div>
+
+  <div class="table-wrapper" *ngIf="battles.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'COMMON.ID' | translate }}</th>
+          <th>{{ 'BATTLE.SPECIES_A' | translate }}</th>
+          <th>{{ 'BATTLE.SPECIES_B' | translate }}</th>
+          <th>{{ 'BATTLE.WINNER' | translate }}</th>
+          <th>{{ 'BATTLE.REASON' | translate }}</th>
+          <th>{{ 'COMMON.DATE' | translate }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let battle of battles">
+          <td>{{ battle.id }}</td>
+          <td>{{ battle.speciesAName }}</td>
+          <td>{{ battle.speciesBName }}</td>
+          <td>
+            <span class="winner-badge">{{ battle.winnerName }}</span>
+          </td>
+          <td>{{ translateBattleReason(battle.resultReason) }}</td>
+          <td>{{ battle.battleDate | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

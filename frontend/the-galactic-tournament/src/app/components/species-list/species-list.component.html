@@ -1,0 +1,174 @@
+<!--
+  Species list template.
+  Combines the species form with a filterable, sortable and scrollable species table.
+-->
+<div class="species-page">
+  <app-species-form
+    [speciesList]="speciesList"
+    (speciesCreated)="onSpeciesCreated()"
+    (speciesUpdated)="onSpeciesUpdated()">
+  </app-species-form>
+
+  <section class="list-card">
+    <div class="section-header">
+      <div>
+        <h2>{{ 'SPECIES_LIST.TITLE' | translate }}</h2>
+        <p>{{ 'SPECIES_LIST.DESCRIPTION' | translate }}</p>
+      </div>
+
+      <button type="button" class="refresh-button" (click)="loadSpecies()">
+        {{ 'COMMON.REFRESH' | translate }}
+      </button>
+    </div>
+
+    <div class="message error" *ngIf="errorMessage">
+      {{ errorMessage | translate }}
+    </div>
+
+    <div class="message success" *ngIf="successMessage">
+      {{ successMessage | translate }}
+    </div>
+
+    <div class="loading" *ngIf="loading">
+      {{ 'SPECIES_LIST.LOADING' | translate }}
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && speciesList.length === 0">
+      {{ 'SPECIES_LIST.EMPTY' | translate }}
+    </div>
+
+    <div class="table-tools" *ngIf="!loading && speciesList.length > 0">
+      <span>
+        {{ 'SPECIES_LIST.SHOWING' | translate:{shown: filteredAndSortedSpeciesList.length, total: speciesList.length} }}
+      </span>
+
+      <button
+        type="button"
+        class="clear-button"
+        (click)="clearFilters()"
+        [disabled]="!hasActiveFilters()">
+        {{ 'SPECIES_LIST.CLEAR_FILTERS' | translate }}
+      </button>
+    </div>
+
+    <div class="table-wrapper" *ngIf="!loading && speciesList.length > 0">
+      <table>
+        <colgroup>
+          <col class="col-name">
+          <col class="col-power">
+          <col class="col-ability">
+          <col class="col-created">
+          <col class="col-actions">
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th>
+              <button type="button" class="sort-button" (click)="sortBy('name')">
+                {{ 'COMMON.NAME' | translate }} {{ getSortIcon('name') }}
+              </button>
+            </th>
+
+            <th>
+              <button type="button" class="sort-button" (click)="sortBy('powerLevel')">
+                {{ 'COMMON.POWER_LEVEL' | translate }} {{ getSortIcon('powerLevel') }}
+              </button>
+            </th>
+
+            <th>
+              <button type="button" class="sort-button" (click)="sortBy('specialAbility')">
+                {{ 'COMMON.SPECIAL_ABILITY' | translate }} {{ getSortIcon('specialAbility') }}
+              </button>
+            </th>
+
+            <th>
+              <button type="button" class="sort-button" (click)="sortBy('createdAt')">
+                {{ 'COMMON.CREATED' | translate }} {{ getSortIcon('createdAt') }}
+              </button>
+            </th>
+
+            <th class="actions-header">
+              {{ 'COMMON.ACTIONS' | translate }}
+            </th>
+          </tr>
+
+          <tr class="filter-row">
+            <th>
+              <input
+                type="text"
+                [(ngModel)]="filters.name"
+                [placeholder]="'SPECIES_LIST.FILTER_NAME' | translate">
+            </th>
+
+            <th>
+              <input
+                type="text"
+                [(ngModel)]="filters.powerLevel"
+                [placeholder]="'SPECIES_LIST.FILTER_POWER' | translate">
+            </th>
+
+            <th>
+              <input
+                type="text"
+                [(ngModel)]="filters.specialAbility"
+                [placeholder]="'SPECIES_LIST.FILTER_ABILITY' | translate">
+            </th>
+
+            <th>
+              <input
+                type="text"
+                [(ngModel)]="filters.createdAt"
+                [placeholder]="'SPECIES_LIST.FILTER_CREATED' | translate">
+            </th>
+
+            <th class="actions-filter-cell"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngIf="filteredAndSortedSpeciesList.length === 0">
+            <td colspan="5" class="no-results">
+              {{ 'SPECIES_LIST.NO_RESULTS' | translate }}
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of filteredAndSortedSpeciesList">
+            <td>{{ item.name }}</td>
+
+            <td>
+              <span class="power-badge">
+                {{ item.powerLevel }}
+              </span>
+            </td>
+
+            <td class="ability-cell">
+              {{ item.specialAbility }}
+            </td>
+
+            <td>
+              {{ item.createdAt | date:'short' }}
+            </td>
+
+            <td class="actions-cell">
+              <div class="actions-buttons">
+                <button
+                  type="button"
+                  class="edit-button"
+                  (click)="editSpecies(item)">
+                  {{ 'COMMON.EDIT' | translate }}
+                </button>
+
+                <button
+                  type="button"
+                  class="delete-button"
+                  (click)="deleteSpecies(item)">
+                  {{ 'COMMON.DELETE' | translate }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

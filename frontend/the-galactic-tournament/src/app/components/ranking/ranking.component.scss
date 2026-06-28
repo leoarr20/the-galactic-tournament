@@ -1,0 +1,147 @@
+/*
+  Ranking component styles.
+  Defines the ranking card, header actions, ranking items, messages and responsive layout.
+*/
+.ranking-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: #261447;
+}
+
+p {
+  margin: 0;
+  color: #666;
+}
+
+button {
+  background: #261447;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ranking-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 120px;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f8f6fb;
+  border: 1px solid #eee;
+}
+
+.ranking-item:first-child {
+  background: linear-gradient(135deg, #fff7df, #fff);
+  border-color: #f2c94c;
+}
+
+.position {
+  font-size: 24px;
+  font-weight: 800;
+  color: #9c27b0;
+}
+
+.info h3 {
+  margin: 0 0 6px;
+  color: #261447;
+}
+
+.info p {
+  color: #666;
+}
+
+.stats {
+  text-align: center;
+}
+
+.stats span {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.stats strong {
+  color: #261447;
+  font-size: 20px;
+}
+
+.victories strong {
+  color: #9c27b0;
+}
+
+.message {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.error {
+  background: #ffe8e8;
+  color: #a40000;
+}
+
+.loading,
+.empty-state {
+  color: #666;
+  padding: 18px 0;
+}
+
+@media (max-width: 800px) {
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ranking-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.danger-button {
+  background: #a40000;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.success {
+  background: #e9f8ee;
+  color: #146c2e;
+}

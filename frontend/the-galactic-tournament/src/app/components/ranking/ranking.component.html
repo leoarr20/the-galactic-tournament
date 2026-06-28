@@ -1,0 +1,60 @@
+<!--
+  Ranking page template.
+  Displays current standings and exposes the ranking reset action.
+-->
+<section class="ranking-card">
+  <div class="section-header">
+    <div>
+      <h2>{{ 'RANKING.TITLE' | translate }}</h2>
+      <p>{{ 'RANKING.DESCRIPTION' | translate }}</p>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" (click)="loadRanking()">
+        {{ 'COMMON.REFRESH' | translate }}
+      </button>
+      <button type="button" class="danger-button" (click)="resetRanking()">
+        {{ 'RANKING.RESET' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="message error" *ngIf="errorMessage">
+    {{ errorMessage | translate }}
+  </div>
+
+  <div class="message success" *ngIf="successMessage">
+    {{ successMessage | translate }}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    {{ 'RANKING.LOADING' | translate }}
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && ranking.length === 0">
+    {{ 'RANKING.EMPTY' | translate }}
+  </div>
+
+  <div class="ranking-list" *ngIf="!loading && ranking.length > 0">
+    <div class="ranking-item" *ngFor="let item of ranking; let i = index">
+      <div class="position">
+        #{{ item.position || (i + 1) }}
+      </div>
+
+      <div class="info">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.specialAbility }}</p>
+      </div>
+
+      <div class="stats">
+        <span>{{ 'COMMON.POWER' | translate }}</span>
+        <strong>{{ item.powerLevel }}</strong>
+      </div>
+
+      <div class="stats victories">
+        <span>{{ 'RANKING.VICTORIES' | translate }}</span>
+        <strong>{{ item.victories }}</strong>
+      </div>
+    </div>
+  </div>
+</section>

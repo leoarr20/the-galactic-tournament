@@ -1,0 +1,129 @@
+<!--
+  Species form template.
+  Reused for both create and update modes with frontend validation and translated messages.
+-->
+<section class="form-card">
+  <h2>
+    {{ isEditMode ? ('SPECIES_FORM.TITLE_EDIT' | translate) : ('SPECIES_FORM.TITLE_CREATE' | translate) }}
+  </h2>
+
+  <p class="description">
+    {{ 'SPECIES_FORM.DESCRIPTION' | translate }}
+  </p>
+
+  <form #speciesForm="ngForm" (ngSubmit)="saveSpecies(speciesForm)" novalidate>
+
+    <div class="form-group">
+      <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+
+      <input
+        id="name"
+        type="text"
+        name="name"
+        [(ngModel)]="species.name"
+        #nameCtrl="ngModel"
+        [placeholder]="'SPECIES_FORM.NAME_PLACEHOLDER' | translate"
+        required
+        maxlength="100"
+        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$"
+        autocomplete="off"
+        (keydown)="allowOnlyLettersNoSpaces($event)"
+        (paste)="onNamePaste($event)"
+        (input)="sanitizeSpeciesName()">
+
+      <small class="field-counter">
+        {{ species.name.length || 0 }}/100
+      </small>
+
+      <small class="field-error" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+        {{ 'SPECIES_FORM.NAME_ERROR' | translate }}
+      </small>
+
+      <small class="field-error" *ngIf="isNameDuplicated() && nameCtrl.touched">
+        {{ 'SPECIES_FORM.NAME_DUPLICATED' | translate }}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="powerLevel">{{ 'COMMON.POWER_LEVEL' | translate }}</label>
+
+      <input
+        id="powerLevel"
+        type="text"
+        name="powerLevel"
+        [(ngModel)]="powerLevelInput"
+        #powerLevelCtrl="ngModel"
+        [placeholder]="'SPECIES_FORM.POWER_PLACEHOLDER' | translate"
+        required
+        maxlength="10"
+        pattern="^[1-9][0-9]{0,9}$"
+        inputmode="numeric"
+        autocomplete="off"
+        (keydown)="allowOnlyIntegerKeys($event)"
+        (paste)="onPowerLevelPaste($event)"
+        (input)="sanitizePowerLevel()">
+
+      <small class="field-counter" [class.warning]="powerLevelInput.length >= maxPowerLevelDigits">
+        {{ powerLevelInput.length || 0 }}/{{ maxPowerLevelDigits }} {{ 'SPECIES_FORM.POWER_COUNTER_SUFFIX' | translate }}
+      </small>
+
+      <small class="field-error" *ngIf="powerLevelCtrl.invalid && powerLevelCtrl.touched">
+        {{ 'SPECIES_FORM.POWER_ERROR' | translate }}
+      </small>
+
+      <small class="field-error" *ngIf="isPowerLevelTooLarge() && powerLevelCtrl.touched">
+        {{ 'SPECIES_FORM.POWER_MAX_INT_ERROR' | translate }}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="specialAbility">{{ 'COMMON.SPECIAL_ABILITY' | translate }}</label>
+
+      <textarea
+        id="specialAbility"
+        name="specialAbility"
+        [(ngModel)]="species.specialAbility"
+        #abilityCtrl="ngModel"
+        [placeholder]="'SPECIES_FORM.ABILITY_PLACEHOLDER' | translate"
+        required
+        maxlength="100"
+        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$"
+        autocomplete="off"
+        (keydown)="allowOnlyLettersAndSpaces($event)"
+        (paste)="onSpecialAbilityPaste($event)"
+        (input)="sanitizeSpecialAbility()">
+      </textarea>
+
+      <small class="field-counter">
+        {{ species.specialAbility.length || 0 }}/100
+      </small>
+
+      <small class="field-error" *ngIf="abilityCtrl.invalid && abilityCtrl.touched">
+        {{ 'SPECIES_FORM.ABILITY_ERROR' | translate }}
+      </small>
+    </div>
+
+    <div class="message error" *ngIf="errorMessage">
+      {{ errorMessage | translate }}
+    </div>
+
+    <div class="message success" *ngIf="successMessage">
+      {{ successMessage | translate }}
+    </div>
+
+    <button type="submit" [disabled]="speciesForm.invalid || isNameDuplicated() || isPowerLevelTooLarge() || loading">
+      <span *ngIf="loading">{{ 'SPECIES_FORM.SAVING' | translate }}</span>
+      <span *ngIf="!loading && isEditMode">{{ 'SPECIES_FORM.BUTTON_UPDATE' | translate }}</span>
+      <span *ngIf="!loading && !isEditMode">{{ 'SPECIES_FORM.BUTTON_CREATE' | translate }}</span>
+    </button>
+
+    <button
+      *ngIf="isEditMode"
+      type="button"
+      class="secondary-button"
+      (click)="cancelEdit(speciesForm)">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+
+  </form>
+</section>
